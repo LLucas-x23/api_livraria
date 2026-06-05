@@ -1,0 +1,18 @@
+POST http://localhost:3333/livros
+Content-Type: application/json
+
+{
+    "titulo": "ninjago",
+    "autor": "lucas"
+}
+
+###
+
+PUT http://localhost:3333/livros/1/emprestar
+
+###
+
+PUT http://localhost:3333/livros/1/devolver
+
+###
+DELETE http://localhost:3333/livros/2/5
