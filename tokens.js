@@ -5,8 +5,8 @@ function gerarNumero(min, max) {
 
 function gerar(){
     lista.length = 0;
-    for(let i=0; i<1; i++){
-        lista.push(gerarNumero(1,10))
+    for(let i=0; i<10; i++){
+        lista.push(gerarNumero(1,999))
     }
 }
 
