@@ -4,8 +4,15 @@ import * as funcao from "./functions.js"
 const server = fastify()
 
 server.get('/livros', (request, reply) => {
+    const search = request.query.search
 
-    return reply.status(200).send(funcao.mostrar())
+    if(search){
+        const resposta = funcao.mostrar_pesquisa(search)
+
+        return reply.status(200).send(resposta)
+    }else{
+        return reply.status(200).send(funcao.mostrar())
+    }
 })
 
 server.get('/livros/:id', (request, reply) => {
@@ -21,9 +28,9 @@ server.get('/livros/:id', (request, reply) => {
 });
 
 server.post('/livros', (request, reply) => {
-    const {titulo, autor} = request.body
+    const {titulo, autor, estilo} = request.body
 
-    return reply.status(funcao.adicionar(titulo, autor)).send()
+    return reply.status(funcao.adicionar(titulo, autor, estilo)).send()
 })
 
 server.put('/livros/:id/emprestar', (request, reply) => {
