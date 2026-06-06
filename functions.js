@@ -1,8 +1,8 @@
 let livros = [
-    { id: 1, titulo: "shazan", autor: 'da vince', disponivel: true },
-    { id: 2, titulo: "vingadores", autor: 'peter parker', disponivel: true },
-    { id: 3, titulo: "o pequeno principe", autor: 'di caprio', disponivel: true }
-];
+    { id: 1, titulo: "shazan", autor: 'da vince', estilo:'romance',  disponivel: true },
+    { id: 2, titulo: "vingadores", autor: 'peter parker', estilo:'terror', disponivel: true },
+    { id: 3, titulo: "o pequeno principe", autor: 'di caprio', estilo:'imaginação', disponivel: true }
+]
 
 export function mostrar(){
     return livros
@@ -18,11 +18,28 @@ export function mostrarcom(id){
     return livroEncontrado || null;
 }
 
-export function adicionar(titulo, autor){
-    if(titulo && autor){
-        livros.push({id:livros.length+1, titulo, autor, disponivel:true})
+export function mostrar_pesquisa(x){
+    const search = x
+    let lista = []
+
+    for(let i=0; i<livros.length; i++){
+        if(livros[i].titulo === search || livros[i].autor === search || livros[i].estilo === search){
+            lista.push(livros[i])
+        }
+    }
+
+    if(lista.length === 0){
+        return livros
+    }else{
+        return lista
+    }
+}
+
+export function adicionar(titulo, autor, estilo){
+    if(titulo && autor && estilo){
+        livros.push({id:livros.length+1, titulo, autor, estilo, disponivel:true})
         return 201
-    }else return 404
+    }else return 400
 }
 
 export function emprestar(x){
@@ -65,7 +82,12 @@ export function deletar(x, y){
         return 'nao encontrado';
     }else{
         if(lista.includes(token)){
+
             livros.splice(id-1, 1)
+            for(let i = id-1; i<livros.length; i++){
+                livros[i].id = i+1;
+            }
+
             return 200
         }else{
             return 'invalido'
